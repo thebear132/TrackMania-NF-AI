@@ -18,7 +18,7 @@ namespace TMNF1
         static void Main(string[] args)
         {
             TmForeverBaseAdress = GetModuleAddress(process, "TmForever.exe");
-            D8INPUTBaseAdress = GetModuleAddress(process, "D8INPUTBaseAdress.dll");
+            D8INPUTBaseAdress = GetModuleAddress(process, "DINPUT8.dll");
 
 
             //Checkpoint MED goal counter
@@ -85,14 +85,41 @@ namespace TMNF1
                 int turning3 = vam.ReadInt32((IntPtr)turning2 + 0x0);
                 int TurningValue = vam.ReadInt32((IntPtr)turning3 + 0x5E8);
 
-                //Console.WriteLine($"Speed={IngameSpeed} | CheckGoal={CheckPointGoal} | Check={CheckPoint} | Time={IngameTime} | Turning {TurningValue} | ");
 
-                
+
+
+
+
+
+
+
+
+
+
+                int forward = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
+                int forward1 = vam.ReadInt32((IntPtr)forward + 0x4);
+                int forward2 = vam.ReadInt32((IntPtr)forward1 + 0x268);
+                int forward3 = vam.ReadInt32((IntPtr)forward2 + 0x30);
+                int forward4 = vam.ReadInt32((IntPtr)forward3 + 0x9C);
+                int Forward = vam.ReadInt32((IntPtr)forward4 + 0x7C);
+
+
+
+
+
+                Console.WriteLine($"Speed={IngameSpeed} | CheckGoal={CheckPointGoal} | Check={CheckPoint} | Time={IngameTime} | Forward={Forward} | Turning {TurningValue} | ");
+
+
+                vam.WriteInt32((IntPtr)D8INPUTBaseAdress + 30320, 128);
+
+
+                //vam.WriteInt32((IntPtr)forward4 + 0x7C, 1065353216);
+
+
+
 
                 if (stopWatch.IsRunning == true && stopWatch.ElapsedMilliseconds >= timePeriod)
                 {
-
-
                     if (!(instruction >= 8))
                     {
                         drive(instruction);
@@ -101,7 +128,6 @@ namespace TMNF1
                     {
                         instruction = 0;
                     }
-
 
                     stopWatch.Restart();
                 }
@@ -130,61 +156,42 @@ namespace TMNF1
                 case 1:
                     Console.WriteLine("---DRIVING FORWARD--");
                     forward = true;
-                    backwards = false;
-                    left = false;
-                    right = false;
                     break;
 
                 case 2:
                     Console.WriteLine("---DRIVING LEFT--");
-                    forward = false;
-                    backwards = false;
                     left = true;
-                    right = false;
                     break;
 
                 case 3:
                     Console.WriteLine("---DRIVING RIGHT--");
-                    forward = false;
-                    backwards = false;
-                    left = false;
                     right = true;
                     break;
 
                 case 4:
                     Console.WriteLine("---DRIVING BACKWARDS--");
-                    forward = false;
                     backwards = true;
-                    left = false;
-                    right = false;
                     break;
 
                 case 5:
                     Console.WriteLine("---DRIVING FORWARD AND LEFT--");
                     forward = true;
-                    backwards = false;
                     left = true;
-                    right = false;
                     break;
 
                 case 6:
+                    Console.WriteLine("---DRIVING FORWARD AND RIGHT--");
                     forward = true;
-                    backwards = false;
-                    left = false;
                     right = true;
                     break;
 
                 case 7:
-                    forward = false;
                     backwards = true;
                     left = true;
-                    right = false;
                     break;
 
                 case 8:
-                    forward = false;
                     backwards = true;
-                    left = false;
                     right = true;
                     break;
             }
@@ -205,25 +212,6 @@ namespace TMNF1
             {
                 vam.WriteInt32((IntPtr)D8INPUTBaseAdress + 0x32350, 128);
             }
-
-
-
-
-
-
-            Console.Write("Driving ");
-            if (vam.ReadInt32((IntPtr)D8INPUTBaseAdress + 0x32348) == 128)
-                Console.Write("Forward, ");
-
-            if (vam.ReadInt32((IntPtr)D8INPUTBaseAdress + 0x32350) == 128)
-                Console.Write("Backwards, ");
-
-            if (vam.ReadInt32((IntPtr)turning3 + 0x5E8) == -1082130432)
-                Console.Write("Left, ");
-
-            if (vam.ReadInt32((IntPtr)turning3 + 0x5E8) == 1065353216)
-                Console.Write("Right, ");
-            Console.Write("\n");
 
             vam.WriteInt32((IntPtr)D8INPUTBaseAdress + 0x32348, 0);
             vam.WriteInt32((IntPtr)D8INPUTBaseAdress + 32348 + 3, 0);
