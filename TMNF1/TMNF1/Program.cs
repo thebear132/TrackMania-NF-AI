@@ -122,11 +122,6 @@ namespace TMNF1
             bool left = false;
             bool right = false;
 
-            int turning = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096A2A4);
-            int turning1 = vam.ReadInt32((IntPtr)turning + 0x35C);
-            int turning2 = vam.ReadInt32((IntPtr)turning1 + 0x0);
-            int turning3 = vam.ReadInt32((IntPtr)turning2 + 0x0);
-
             switch (instruction)
             {
                 case 0:
