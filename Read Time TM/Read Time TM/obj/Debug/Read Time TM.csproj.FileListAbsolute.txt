@@ -1,0 +1,12 @@
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\Read Time TM.exe.config
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\Read Time TM.exe
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\Read Time TM.pdb
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\VAMemory.dll
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\obj\Debug\Read Time TM.csprojAssemblyReference.cache
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\obj\Debug\Read Time TM.csproj.CoreCompileInputs.cache
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\obj\Debug\Read Time TM.csproj.CopyComplete
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\obj\Debug\Read Time TM.exe
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\obj\Debug\Read Time TM.pdb
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\GAF.461.dll
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\WindowsInput.dll
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Read Time TM\Read Time TM\bin\Debug\WindowsInput.xml
