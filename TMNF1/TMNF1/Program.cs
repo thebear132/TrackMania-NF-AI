@@ -29,6 +29,12 @@ namespace TMNF1
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
+
+            Stopwatch stopTest = new Stopwatch();
+            stopTest.Start();
+            int decision = 0;
+
+
             int instruction = 0;
             int timePeriod = 500;
 
@@ -41,6 +47,9 @@ namespace TMNF1
                 int time3 = vam.ReadInt32((IntPtr)time2 + 0x24);
                 int time4 = vam.ReadInt32((IntPtr)time3 + 0x30C);
                 int IngameTime = vam.ReadInt32((IntPtr)time4 + 0x4B0);
+
+                IngameTime = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C + 0x100 + 0x5B4 + 0x24 + 0x30C + 0x4B0);
+
 
                 if (lastTime > 0 && IngameTime == 0)
                 {
@@ -87,34 +96,47 @@ namespace TMNF1
 
 
 
-
-
-
-
-
-
-
-
-
-                int forward = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
-                int forward1 = vam.ReadInt32((IntPtr)forward + 0x4);
-                int forward2 = vam.ReadInt32((IntPtr)forward1 + 0x268);
-                int forward3 = vam.ReadInt32((IntPtr)forward2 + 0x30);
-                int forward4 = vam.ReadInt32((IntPtr)forward3 + 0x9C);
-                int Forward = vam.ReadInt32((IntPtr)forward4 + 0x7C);
-
-
-
+                int forward = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x004CE65C);
+                int forward1 = vam.ReadInt32((IntPtr)forward + 0x14);
+                int forward2 = vam.ReadInt32((IntPtr)forward1 + 0x84);
+                int forward3 = vam.ReadInt32((IntPtr)forward2 + 0x20);
+                int forward4 = vam.ReadInt32((IntPtr)forward3 + 0x24);
+                int Forward = vam.ReadInt32((IntPtr)forward4 + 0x1E4);
 
 
                 Console.WriteLine($"Speed={IngameSpeed} | CheckGoal={CheckPointGoal} | Check={CheckPoint} | Time={IngameTime} | Forward={Forward} | Turning {TurningValue} | ");
 
 
-                vam.WriteInt32((IntPtr)D8INPUTBaseAdress + 30320, 128);
+                //vam.WriteInt32((IntPtr)forward4 + 0x1E4, 128);
+
+                //int forwardTest = vam.ReadInt32((IntPtr)D8INPUTBaseAdress + 0x32348);
+
+                //int forwardTest1 = vam.ReadInt32((IntPtr)forwardTest + 3);
 
 
-                //vam.WriteInt32((IntPtr)forward4 + 0x7C, 1065353216);
 
+                int eax = 0xC8;
+                int ebx = 05438578;
+
+                int pointer = vam.ReadInt32((IntPtr)TmForeverBaseAdress + ebx);
+                int pointer1 = vam.ReadInt32((IntPtr)pointer + 0xC8);
+
+
+
+
+                if (stopTest.ElapsedMilliseconds > 3000)
+                {
+                    stopTest.Restart();
+                    if (decision == 1065353216)
+                    {
+                        decision = -1082130432;
+                    } else
+                    {
+                        decision = 1065353216;
+                    }
+
+                }
+                //vam.WriteInt32((IntPtr)turning3 + 0x5E8, decision);
 
 
 
@@ -130,8 +152,8 @@ namespace TMNF1
                     }
 
                     stopWatch.Restart();
-                }
 
+                }
             }
 
             Console.WriteLine("Program has ended");
