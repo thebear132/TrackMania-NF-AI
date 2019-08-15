@@ -1,0 +1,9 @@
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\bin\Debug\Dll Reading 1.exe.config
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\bin\Debug\Dll Reading 1.exe
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\bin\Debug\Dll Reading 1.pdb
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\bin\Debug\VAMemory.dll
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\obj\Debug\Dll Reading 1.csprojAssemblyReference.cache
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\obj\Debug\Dll Reading 1.csproj.CoreCompileInputs.cache
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\obj\Debug\Dll Reading 1.csproj.CopyComplete
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\obj\Debug\Dll Reading 1.exe
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\Dll Reading 1\Dll Reading 1\obj\Debug\Dll Reading 1.pdb

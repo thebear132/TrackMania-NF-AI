@@ -1,0 +1,9 @@
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\bin\Debug\TMNF1.exe.config
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\bin\Debug\TMNF1.exe
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\bin\Debug\TMNF1.pdb
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\bin\Debug\VAMemory.dll
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\obj\Debug\TMNF1.csproj.CoreCompileInputs.cache
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\obj\Debug\TMNF1.csproj.CopyComplete
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\obj\Debug\TMNF1.exe
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\obj\Debug\TMNF1.pdb
+C:\Users\Bjørn Drachmann\Dropbox\Bjørn\WSE\Trackmania Deeplearning\TMNF1\TMNF1\obj\Debug\TMNF1.csprojAssemblyReference.cache
