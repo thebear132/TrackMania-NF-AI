@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Text;
 using System.Runtime.InteropServices;
-//using GAF;
 
 
 namespace Read_Time_TM
@@ -20,53 +19,84 @@ namespace Read_Time_TM
             switch (instruction)
             {
                 case '0':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
                     break;
 
                 case '1':
                     Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
                     break;
 
                 case '2':
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
+                    break;
+
+                case '3':
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
+                    break;
+
+                case '4':
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
+                    break;
+
+                case '5':
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
+                    break;
+
+                case '6':
                     Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
                     Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
+
+                    break;
+
+                case '7':
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
+                    break;
+
+                case '8':
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
+                    Thread.Sleep(timePeriod);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
+                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
                     break;
             }
-            Thread.Sleep(timePeriod);
-            Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
-            Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
-            Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
         }
         static void Main(string[] args)
         {
             Random rnd = new Random();
             VAMemory vam = new VAMemory(process);
-            int time = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C);
-            int time1 = vam.ReadInt32((IntPtr)time + 0x100);
-            int time2 = vam.ReadInt32((IntPtr)time1 + 0x5B4);
-            int time3 = vam.ReadInt32((IntPtr)time2 + 0x24);
-            int time4 = vam.ReadInt32((IntPtr)time3 + 0x30C);
-            Thread.Sleep(2000);
+
             string driveInstructions;
             StringBuilder sb = new StringBuilder("", 120);
             for (int i = 0; i < 120; i++)
             {
-                sb.Append(rnd.Next(3).ToString());
+                sb.Append(rnd.Next(9).ToString());
             }
             driveInstructions = sb.ToString();
 
-            //Comment this out : )
-            //driveInstructions = "000020001011022000000000000001110000000000000111";
-            //Console.WriteLine("Currently using custom string");
-            //
-
-
-            Console.WriteLine("CURRENT INSTRUCTION: " + driveInstructions + "\nRestart the round, then restart it again when timer is past 0.5 (1.0 to be safe)");
+            Console.WriteLine("CURRENT INSTRUCTION: " + driveInstructions + "\nRestart the round");
             while (true)
             {
                 Thread.Sleep(100);
-                if (vam.ReadInt32((IntPtr)time4 + 0x4B0) == 0)
+                if (vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0) == 0)
                 {
                     foreach (char c in driveInstructions)
                     {
