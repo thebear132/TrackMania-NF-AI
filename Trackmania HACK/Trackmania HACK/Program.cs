@@ -19,6 +19,7 @@ namespace Read_Time_TM
             switch (instruction)
             {
                 case '0':
+                    Thread.Sleep(timePeriod);
                     break;
 
                 case '1':
@@ -91,7 +92,7 @@ namespace Read_Time_TM
                 sb.Append(rnd.Next(9).ToString());
             }
             driveInstructions = sb.ToString();
-
+            driveInstructions = "1111111111111111111111111111111111111111111111111";
             Console.WriteLine("CURRENT INSTRUCTION: " + driveInstructions + "\nRestart the round");
             while (true)
             {
