@@ -17,12 +17,17 @@ namespace TrackmaniaGAF
         static VAMemory vam = new VAMemory(process);
         private static void Main(string[] args)
         {
+            //Sleep 2000 ms for at få tid til at klikke ind på Trackmania.
+            Thread.Sleep(2000);
+
+            //Angiv probabilities af crossover/mutation og procentdelen af population der kan være elite(eligible for crossover)
             const double crossoverProbability = 0.85;
             const double mutationProbability = 0.08;
             const int elitismPercentage = 5;
 
-            //create a Population of 100 random chromosomes of length 44
-            var population = new Population(4, 66, false, false);
+            //create a Population with 4 random chromosomes of length 64
+            //First generation/population will have double the amount for better results
+            var population = new Population(4, 64, false, false);
 
             //create the genetic operators 
             var elite = new Elite(elitismPercentage);
@@ -54,26 +59,39 @@ namespace TrackmaniaGAF
             double fitnessValue = -1;
             if (chromosome != null)
             {
-
-                Console.WriteLine(vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334));
+                //Make the chromosome into a binary string ( string of 0's and 1's )
                 string binaryInstructions = chromosome.ToBinaryString(0, chromosome.Count);
-                char driveInstruction;
+                string driveInstruction;
+
+                //Klik på delete, (Restart banen)
                 Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DELETE, false, Keyboard.InputType.Keyboard);
                 Thread.Sleep(10);
                 Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DELETE, true, Keyboard.InputType.Keyboard);
-                Thread.Sleep(3000);
-                for (int i = 0; i < binaryInstructions.Length; i += 3)
+
+                //Begynd at sende driving instructions (binary string) i segmenter af 4 characters når banen er blevet restarted ( tid=0 )
+                while (true)
                 {
-                    driveInstruction = Convert.ToInt32(binaryInstructions.Substring(i, 3), 2).ToString()[0];
-                    Console.Write(driveInstruction);
-                    Drive(driveInstruction, 500);
+                    if (vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0) == 0)
+                    {
+                        for (int i = 0; i < binaryInstructions.Length; i += 4)
+                        {
+                            driveInstruction = binaryInstructions.Substring(i, 4);
+                            Console.Write(driveInstruction);
+                            Drive(driveInstruction, 500);
+                        }
+                        break;
+                    }
                 }
+
+                //Læs hvor mange checkpoints der er blevet completed og hvor lang tid der er gået fra memory
                 double completedCheckpoints = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334);
                 double completedTime = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0);
-                Console.WriteLine("      Checkpoints-" + completedCheckpoints + "    |      Time-" + completedTime);
-                Console.WriteLine("Fitness: " + ((completedCheckpoints + 1 )/( 6 + 1)) * (maxTime / maxTime));
 
-                fitnessValue = ((completedCheckpoints + 1)/( 6 + 1)) * (maxTime / maxTime);
+                Console.WriteLine("      Checkpoints-" + completedCheckpoints + "    |      Time-" + completedTime);
+                Console.WriteLine("Fitness: " + (completedCheckpoints + 1 )/( 6 + 1) * (maxTime / maxTime));
+
+                //Return en fitness value
+                fitnessValue = (completedCheckpoints + 1)/( 6 + 1) * (maxTime / maxTime);
             }
             else
             {
@@ -100,76 +118,40 @@ namespace TrackmaniaGAF
             //display the X, Y and fitness of the best chromosome in this generation 
             Console.WriteLine(chromosome.ToBinaryString(0, chromosome.Count) + "\n FITNESS:" +  e.Population.MaximumFitness);
         }
-        static public void Drive(char instruction, int timePeriod)
+        static public void Drive(string instruction, int timePeriod)
         {
-            switch (instruction)
+            if (instruction[0] == '1')
             {
-                case '0':
-                    //Thread.Sleep(timePeriod);
-                    //break;
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                case '1':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                case '2':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                case '3':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                case '4':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                case '5':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                case '6':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
-
-                    break;
-
-                case '7':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
-                    break;
-
-                /*case '8':
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
-                    Thread.Sleep(timePeriod);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
-                    Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
-                    break;*/
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, false, Keyboard.InputType.Keyboard);
+            }
+            if (instruction[1] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, false, Keyboard.InputType.Keyboard);
+            }
+            if (instruction[2] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, false, Keyboard.InputType.Keyboard);
+            }
+            if (instruction[3] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, false, Keyboard.InputType.Keyboard);
+            }
+            Thread.Sleep(timePeriod);
+            if (instruction[0] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_UPARROW, true, Keyboard.InputType.Keyboard);
+            }
+            if (instruction[1] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_DOWNARROW, true, Keyboard.InputType.Keyboard);
+            }
+            if (instruction[2] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_LEFTARROW, true, Keyboard.InputType.Keyboard);
+            }
+            if (instruction[3] == '1')
+            {
+                Keyboard.SendKey(Keyboard.DirectXKeyStrokes.DIK_RIGHTARROW, true, Keyboard.InputType.Keyboard);
             }
         }
         static int GetModuleAddress(string getProcess, string moduleName)
