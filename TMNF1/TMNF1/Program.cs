@@ -29,51 +29,81 @@ namespace TMNF1
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-
             Stopwatch stopTest = new Stopwatch();
             stopTest.Start();
             int decision = 0;
 
-
             int instruction = 0;
             int timePeriod = 500;
 
+
+
+
+
+
+            //Ingame time ____________ "TmForever.exe" + __
+            int time = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C);
+            int time1 = vam.ReadInt32((IntPtr)time + 0x100);
+            int time2 = vam.ReadInt32((IntPtr)time1 + 0x5B4);
+            int time3 = vam.ReadInt32((IntPtr)time2 + 0x24);
+            int time4 = vam.ReadInt32((IntPtr)time3 + 0x30C);
+            int IngameTime = vam.ReadInt32((IntPtr)time4 + 0x4B0);
+            int timeHex = time4 + 0x4B0;
+
+
+            //Ingame speed
+            int speed = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
+            int speed1 = vam.ReadInt32((IntPtr)speed + 0x0);
+            int speed2 = vam.ReadInt32((IntPtr)speed1 + 0x1C);
+            int IngameSpeed = vam.ReadInt32((IntPtr)speed2 + 0x340);
+            int ingameHex = speed2 + 0x340;
+
+
+
+            //Checkpoint goal
+            int cpg = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
+            int cpg1 = vam.ReadInt32((IntPtr)cpg + 0x0);
+            int cpg2 = vam.ReadInt32((IntPtr)cpg1 + 0x1C);
+            int CheckPointGoal = vam.ReadInt32((IntPtr)cpg2 + 0x334);
+            int cpgHex = cpg2 + 0x334;
+
+
+            //Checkpoint
+            int cp = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
+            int cp1 = vam.ReadInt32((IntPtr)cp + 0x0);
+            int cp2 = vam.ReadInt32((IntPtr)cp1 + 0x1C);
+            int CheckPoint = vam.ReadInt32((IntPtr)cp2 + 0x330);
+            int cgHex = cp2 + 0x330;
+
+
+
+
+            int turning = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096A2A4);
+            int turning1 = vam.ReadInt32((IntPtr)turning + 0x35C);
+            int turning2 = vam.ReadInt32((IntPtr)turning1 + 0x0);
+            int turning3 = vam.ReadInt32((IntPtr)turning2 + 0x0);
+            int TurningValue = vam.ReadInt32((IntPtr)turning3 + 0x5E8);
+            int turningHex = turning3 + 0x5E8;
+
+
+
+            int forward = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x004CE65C);
+            int forward1 = vam.ReadInt32((IntPtr)forward + 0x14);
+            int forward2 = vam.ReadInt32((IntPtr)forward1 + 0x84);
+            int forward3 = vam.ReadInt32((IntPtr)forward2 + 0x20);
+            int forward4 = vam.ReadInt32((IntPtr)forward3 + 0x24);
+            int Forward = vam.ReadInt32((IntPtr)forward4 + 0x1E4);
+            int forwardHex = forward4 + 0x1E4;
+
             while (true)
             {
-                //Ingame time ____________ "TmForever.exe" + __
-                int time = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C);
-                int time1 = vam.ReadInt32((IntPtr)time + 0x100);
-                int time2 = vam.ReadInt32((IntPtr)time1 + 0x5B4);
-                int time3 = vam.ReadInt32((IntPtr)time2 + 0x24);
-                int time4 = vam.ReadInt32((IntPtr)time3 + 0x30C);
-                int IngameTime = vam.ReadInt32((IntPtr)time4 + 0x4B0);
-
-                IngameTime = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C + 0x100 + 0x5B4 + 0x24 + 0x30C + 0x4B0);
-
-
+                //IngameTime = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C + 0x100 + 0x5B4 + 0x24 + 0x30C + 0x4B0);
+                
                 if (lastTime > 0 && IngameTime == 0)
                 {
                     goalTime = lastTime;
                 }
                 lastTime = IngameTime;
-
-                //Ingame speed
-                int speed = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
-                int speed1 = vam.ReadInt32((IntPtr)speed + 0x0);
-                int speed2 = vam.ReadInt32((IntPtr)speed1 + 0x1C);
-                int IngameSpeed = vam.ReadInt32((IntPtr)speed2 + 0x340);
-
-                //Checkpoint goal
-                int cpg = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
-                int cpg1 = vam.ReadInt32((IntPtr)cpg + 0x0);
-                int cpg2 = vam.ReadInt32((IntPtr)cpg1 + 0x1C);
-                int CheckPointGoal = vam.ReadInt32((IntPtr)cpg2 + 0x334);
-
-                //Checkpoint
-                int cp = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C);
-                int cp1 = vam.ReadInt32((IntPtr)cp + 0x0);
-                int cp2 = vam.ReadInt32((IntPtr)cp1 + 0x1C);
-                int CheckPoint = vam.ReadInt32((IntPtr)cp2 + 0x330);
 
 
                 if (CheckPointGoal == CheckPoint + 1)
@@ -87,23 +117,6 @@ namespace TMNF1
                 }
 
 
-
-                int turning = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096A2A4);
-                int turning1 = vam.ReadInt32((IntPtr)turning + 0x35C);
-                int turning2 = vam.ReadInt32((IntPtr)turning1 + 0x0);
-                int turning3 = vam.ReadInt32((IntPtr)turning2 + 0x0);
-                int TurningValue = vam.ReadInt32((IntPtr)turning3 + 0x5E8);
-
-
-
-                int forward = vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x004CE65C);
-                int forward1 = vam.ReadInt32((IntPtr)forward + 0x14);
-                int forward2 = vam.ReadInt32((IntPtr)forward1 + 0x84);
-                int forward3 = vam.ReadInt32((IntPtr)forward2 + 0x20);
-                int forward4 = vam.ReadInt32((IntPtr)forward3 + 0x24);
-                int Forward = vam.ReadInt32((IntPtr)forward4 + 0x1E4);
-
-
                 Console.WriteLine($"Speed={IngameSpeed} | CheckGoal={CheckPointGoal} | Check={CheckPoint} | Time={IngameTime} | Forward={Forward} | Turning {TurningValue} | ");
 
 
@@ -112,16 +125,6 @@ namespace TMNF1
                 //int forwardTest = vam.ReadInt32((IntPtr)D8INPUTBaseAdress + 0x32348);
 
                 //int forwardTest1 = vam.ReadInt32((IntPtr)forwardTest + 3);
-
-
-
-                int eax = 0xC8;
-                int ebx = 05438578;
-
-                int pointer = vam.ReadInt32((IntPtr)TmForeverBaseAdress + ebx);
-                int pointer1 = vam.ReadInt32((IntPtr)pointer + 0xC8);
-
-
 
 
                 if (stopTest.ElapsedMilliseconds > 3000)
