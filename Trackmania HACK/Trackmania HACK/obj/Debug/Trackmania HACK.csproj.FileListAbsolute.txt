@@ -1,0 +1,9 @@
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\bin\Debug\Trackmania HACK.exe.config
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\bin\Debug\Trackmania HACK.exe
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\bin\Debug\Trackmania HACK.pdb
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\bin\Debug\VAMemory.dll
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\obj\Debug\Trackmania HACK.csprojAssemblyReference.cache
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\obj\Debug\Trackmania HACK.csproj.CoreCompileInputs.cache
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\obj\Debug\Trackmania HACK.csproj.CopyComplete
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\obj\Debug\Trackmania HACK.exe
+C:\Users\Bruger\source\repos\Trackmania HACK\Trackmania HACK\obj\Debug\Trackmania HACK.pdb
