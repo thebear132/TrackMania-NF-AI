@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="GAF.461, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GAF.2.3.1\lib\net461\GAF.461.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -11,10 +11,17 @@ namespace TrackmaniaGAF
 {
     internal class Program
     {
+        static List<BestOfGeneration> bestGeneration = new List<BestOfGeneration>();
         readonly static int maxTime = 10;
         readonly static string process = "TmForever";
         readonly static int TmForeverBaseAdress = GetModuleAddress(process, "TmForever.exe");
         static VAMemory vam = new VAMemory(process);
+        public class BestOfGeneration
+        {
+            public string BestString;
+            public int TimeTaken;
+            public int CheckpointsComp;
+        }
         private static void Main(string[] args)
         {
             //Sleep 2000 ms for at få tid til at klikke ind på Trackmania.
@@ -23,11 +30,11 @@ namespace TrackmaniaGAF
             //Angiv probabilities af crossover/mutation og procentdelen af population der kan være elite(eligible for crossover)
             const double crossoverProbability = 0.85;
             const double mutationProbability = 0.08;
-            const int elitismPercentage = 5;
+            const int elitismPercentage = 15;
 
             //create a Population with 4 random chromosomes of length 64
             //First generation/population will have double the amount for better results
-            var population = new Population(8, 64, false, false);
+            var population = new Population(20, 96, false, false);
 
             //create the genetic operators 
             var elite = new Elite(elitismPercentage);
@@ -104,6 +111,7 @@ namespace TrackmaniaGAF
 
         public static bool TerminateAlgorithm(Population population, int currentGeneration, long currentEvaluation)
         {
+            //Stop on 100th generation
             return currentGeneration > 100;
         }
 
@@ -112,11 +120,16 @@ namespace TrackmaniaGAF
 
             //get the best solution 
             var chromosome = e.Population.GetTop(1)[0];
+            BestOfGeneration currentGen = new BestOfGeneration();
+            currentGen.BestString = chromosome.ToBinaryString(0, chromosome.Count);
+            bestGeneration.Add(currentGen);
+            int i = 1;
+            foreach(BestOfGeneration instruction in bestGeneration)
+            {
+                Console.WriteLine("Gen" + i + ": " + instruction.BestString + "\nFitness: " + e.Population.MaximumFitness);
+            }
 
-            
-
-            //display the X, Y and fitness of the best chromosome in this generation 
-            Console.WriteLine(chromosome.ToBinaryString(0, chromosome.Count) + "\n FITNESS:" +  e.Population.MaximumFitness);
+            //Console.WriteLine(chromosome.ToBinaryString(0, chromosome.Count) + "\n FITNESS:" +  e.Population.MaximumFitness);
         }
         static public void Drive(string instruction, int timePeriod)
         {
