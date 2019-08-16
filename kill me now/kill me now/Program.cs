@@ -19,13 +19,14 @@ namespace TrackmaniaGAF
         public class BestOfGeneration
         {
             public string BestString;
+            public double Fitness;
             public int TimeTaken;
             public int CheckpointsComp;
         }
         private static void Main(string[] args)
         {
-            //Sleep 2000 ms for at få tid til at klikke ind på Trackmania.
-            Thread.Sleep(2000);
+            //Sleep 4000 ms for at få tid til at klikke ind på Trackmania.
+            Thread.Sleep(4000);
 
             //Angiv probabilities af crossover/mutation og procentdelen af population der kan være elite(eligible for crossover)
             const double crossoverProbability = 0.85;
@@ -122,12 +123,16 @@ namespace TrackmaniaGAF
             var chromosome = e.Population.GetTop(1)[0];
             BestOfGeneration currentGen = new BestOfGeneration();
             currentGen.BestString = chromosome.ToBinaryString(0, chromosome.Count);
+            currentGen.Fitness = e.Population.MaximumFitness;
             bestGeneration.Add(currentGen);
             int i = 1;
+            Console.WriteLine(" ----------- GENERATION COMPLETE ------------ ");
             foreach(BestOfGeneration instruction in bestGeneration)
             {
-                Console.WriteLine("Gen" + i + ": " + instruction.BestString + "\nFitness: " + e.Population.MaximumFitness);
+                Console.WriteLine("Gen" + i + ": " + instruction.BestString + "\nFitness: " + instruction.Fitness);
+                i++;
             }
+            Console.WriteLine('\n');
 
             //Console.WriteLine(chromosome.ToBinaryString(0, chromosome.Count) + "\n FITNESS:" +  e.Population.MaximumFitness);
         }
