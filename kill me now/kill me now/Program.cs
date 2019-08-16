@@ -27,7 +27,7 @@ namespace TrackmaniaGAF
 
             //create a Population with 4 random chromosomes of length 64
             //First generation/population will have double the amount for better results
-            var population = new Population(4, 64, false, false);
+            var population = new Population(8, 64, false, false);
 
             //create the genetic operators 
             var elite = new Elite(elitismPercentage);
@@ -87,11 +87,11 @@ namespace TrackmaniaGAF
                 double completedCheckpoints = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334);
                 double completedTime = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0);
 
-                Console.WriteLine("      Checkpoints-" + completedCheckpoints + "    |      Time-" + completedTime);
-                Console.WriteLine("Fitness: " + (completedCheckpoints + 1 )/( 6 + 1) * (maxTime / maxTime));
+                Console.WriteLine("\nCheckpoints-" + completedCheckpoints + "    |      Time-" + completedTime);
+                Console.WriteLine("Fitness: " + (completedCheckpoints )/( 6) * (maxTime / maxTime));
 
                 //Return en fitness value
-                fitnessValue = (completedCheckpoints + 1)/( 6 + 1) * (maxTime / maxTime);
+                fitnessValue = (completedCheckpoints)/( 6) * (maxTime / maxTime);
             }
             else
             {
