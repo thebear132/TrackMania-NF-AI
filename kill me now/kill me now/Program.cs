@@ -131,6 +131,11 @@ namespace TrackmaniaGAF
             {
                 Console.WriteLine("Gen" + i + ": " + instruction.BestString + "\nFitness: " + instruction.Fitness);
                 i++;
+                //WRITE TO FILE 
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Bruger\source\repos\kill me now\trackmaniaGAlog.txt", true))
+                {
+                    file.WriteLine("Gen" + i + ": " + instruction.BestString + "\nFitness: " + instruction.Fitness);
+                }
             }
             Console.WriteLine('\n');
 
