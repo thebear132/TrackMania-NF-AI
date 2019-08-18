@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kill me now", "kill me now\kill me now.csproj", "{C8811E7B-2320-4012-AFE8-D26871EAD0F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8811E7B-2320-4012-AFE8-D26871EAD0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8811E7B-2320-4012-AFE8-D26871EAD0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8811E7B-2320-4012-AFE8-D26871EAD0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8811E7B-2320-4012-AFE8-D26871EAD0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CBC6345-EE26-4714-BA49-23D2118DE0DA}
+	EndGlobalSection
+EndGlobal
