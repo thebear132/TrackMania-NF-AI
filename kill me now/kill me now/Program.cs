@@ -212,10 +212,10 @@ namespace TrackmaniaGAF
                 Console.WriteLine("Gen" + (i - 1) + ": " + instruction.BestString + "\nFitness: " + instruction.Fitness);
                 i++;
                 //WRITE TO FILE
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(defaultPath, true))
-                {
-                    file.WriteLine("Gen" + (i - 1) + ": " + instruction.BestString + "\nFitness: " + instruction.Fitness);
-                }
+            }
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(defaultPath, true))
+            {
+                file.WriteLine("Gen" + (i - 1) + ": " + currentGen.BestString + "\nFitness: " + currentGen.Fitness);
             }
             Console.WriteLine('\n');
             Console.WriteLine("----------- GENERATION LOG COMPLETE ------------\n\n\n");    
@@ -244,7 +244,6 @@ namespace TrackmaniaGAF
 
             int firstCheck;
             int secondCheck;
-            int index = 0;
             while(stopWatch.IsRunning && stopWatch.ElapsedMilliseconds < timePeriod)
             {
                 firstCheck = vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334);
@@ -256,8 +255,18 @@ namespace TrackmaniaGAF
                     {
                         if(checkPointArray[i] == 0)
                         {
-                            checkPointArray[index] = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0);
-                            break;
+                            if (i!= 0)
+                            {
+                                checkPointArray[i] = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0) - checkPointArray[i - 1];
+                                break;
+                            }
+                            else
+                            {
+                                checkPointArray[i] = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0);
+                            }
+
+
+
                         }
 
                     }
