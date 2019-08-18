@@ -63,9 +63,9 @@ namespace TrackmaniaGAF
             Console.WriteLine("Starting program");
 
             //Angiv probabilities af crossover/mutation og procentdelen af population der kan være elite(eligible for crossover)
-            const double crossoverProbability = 0.85;
+            const double crossoverProbability = 1;
             const double mutationProbability = 0.08;
-            const int elitismPercentage = 15;
+            const int elitismPercentage = 10;
 
             Console.WriteLine($"{maxTime}, {intervalTime}");
             int chroLengths = ((maxTime * 1000) * 4) / intervalTime;
@@ -242,27 +242,34 @@ namespace TrackmaniaGAF
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            int firstCheck;
+            int firstCheck = vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334);
             int secondCheck;
             while(stopWatch.IsRunning && stopWatch.ElapsedMilliseconds < timePeriod)
             {
-                firstCheck = vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334);
                 Thread.Sleep(10);
                 secondCheck = vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0095772C) + 0x0) + 0x1C) + 0x334);
                 if ( firstCheck != secondCheck)
                 {
+                    firstCheck = secondCheck;
                     for (int i = 0; i < checkPointArray.Length; i ++)
                     {
                         if(checkPointArray[i] == 0)
                         {
                             if (i!= 0)
                             {
-                                checkPointArray[i] = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0) - checkPointArray[i - 1];
+                                double minusValue = 0;
+                                for(int k = 0; k < checkPointArray.Length; k++)
+                                {
+                                    if (checkPointArray[k] != 0)
+                                        minusValue += checkPointArray[k];
+                                }
+                                checkPointArray[i] = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0) - minusValue;
                                 break;
                             }
                             else
                             {
                                 checkPointArray[i] = (double)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)vam.ReadInt32((IntPtr)TmForeverBaseAdress + 0x0096847C) + 0x100) + 0x5B4) + 0x24) + 0x30C) + 0x4B0);
+                                break;
                             }
 
 
